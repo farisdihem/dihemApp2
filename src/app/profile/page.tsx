@@ -57,12 +57,10 @@ export default function ProfilePage() {
     }
   }, []);
 
-  const { getRootProps, getInputProps, open } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     maxFiles: 1,
-    noClick: true,
-    noKeyboard: true,
   });
 
   type Item = {
