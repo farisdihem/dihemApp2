@@ -10,7 +10,7 @@ const navItems = [
   { id: 'home', icon: Home, href: '/' },
   { id: 'search', icon: Search, href: '/search' },
   { id: 'generate', icon: Wand2, href: '/generate' },
-  { id: 'saved', icon: Bookmark, href: '#' },
+  { id: 'saved', icon: Bookmark, href: '/saved' },
   { id: 'profile', icon: User, href: '#' },
 ];
 
