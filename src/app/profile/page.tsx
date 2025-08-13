@@ -40,7 +40,7 @@ export default function ProfilePage() {
     name: 'dihem abd',
     username: '@dihem.abd',
     avatar: 'https://placehold.co/128x128.png',
-    hint: 'woman portrait',
+    hint: 'man portrait',
   };
 
   type Item = {
