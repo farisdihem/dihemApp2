@@ -24,7 +24,7 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="sticky bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur-sm md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur-sm md:hidden">
       <div className="flex justify-around items-start h-16 px-2 pt-2 pb-1">
         {navItems.map((item, index) => {
           const isActive = index === 0;
