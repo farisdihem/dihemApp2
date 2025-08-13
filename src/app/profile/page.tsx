@@ -3,6 +3,7 @@
 
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
+import { useToast } from '@/hooks/use-toast';
 import { Header } from '@/components/layout/header';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Button } from '@/components/ui/button';
@@ -34,6 +35,7 @@ const supportItems = [
 
 export default function ProfilePage() {
   const { t, language, dir } = useLanguage();
+  const { toast } = useToast();
 
   const profile = {
     name: 'Layla Hassan',
@@ -49,8 +51,18 @@ export default function ProfilePage() {
     subtitleKey: keyof typeof t;
   };
   
+  const handleItemClick = (item: Item) => {
+    toast({
+      title: t[item.titleKey],
+      description: 'This feature is not yet implemented.',
+    });
+  };
+
   const ListItem = ({ item }: { item: Item }) => (
-    <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 group cursor-pointer">
+    <div 
+      onClick={() => handleItemClick(item)}
+      className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 group cursor-pointer active:bg-secondary"
+    >
       <div className="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12">
         <item.icon className="h-6 w-6" />
       </div>
@@ -111,6 +123,7 @@ export default function ProfilePage() {
           <Button
             variant="secondary"
             className="flex-1 h-12 text-base text-destructive hover:text-destructive/90"
+            onClick={() => toast({ title: t.logOut, description: 'This feature is not yet implemented.' })}
           >
             {t.logOut}
           </Button>
