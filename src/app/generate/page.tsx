@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/language-context';
@@ -15,7 +15,23 @@ import { Logo } from '@/components/decor/logo';
 
 export default function GeneratePage() {
   const { t, dir } = useLanguage();
-  const [progress, setProgress] = useState(60);
+  const [progress, setProgress] = useState(10);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 95) {
+          clearInterval(timer);
+          return 95;
+        }
+        return prevProgress + 5;
+      });
+    }, 400);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background" dir={dir}>
