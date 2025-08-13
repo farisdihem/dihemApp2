@@ -1,7 +1,9 @@
 
 'use client';
 
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
+import { useDropzone } from 'react-dropzone';
 import { useLanguage } from '@/contexts/language-context';
 import { useToast } from '@/hooks/use-toast';
 import { BottomNav } from '@/components/layout/bottom-nav';
@@ -36,12 +38,32 @@ export default function ProfilePage() {
   const { t, language, dir, setLanguage } = useLanguage();
   const { toast } = useToast();
 
-  const profile = {
+  const [profile, setProfile] = useState({
     name: 'dihem abd',
     username: '@dihem.abd',
     avatar: 'https://images.unsplash.com/photo-1645356153497-b0975856908d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOXx8JUQ4JUIxJUQ4JUFDJUQ5JTg0JTIwJUQ4JUE4JUQ5JTg0JUQ4JUFEJUQ5JThBJUQ4JUE5fGVufDB8fHx8MTc1NTEwMDAwOXww&ixlib=rb-4.1.0&q=80&w=1080',
     hint: 'man portrait',
-  };
+  });
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUri = e.target?.result as string;
+        setProfile((p) => ({ ...p, avatar: dataUri }));
+      };
+      reader.readAsDataURL(file);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, open } = useDropzone({
+    onDrop,
+    accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
+    maxFiles: 1,
+    noClick: true,
+    noKeyboard: true,
+  });
 
   type Item = {
     id: string;
@@ -96,7 +118,8 @@ export default function ProfilePage() {
         <div className="flex p-4 @container">
           <div className="flex w-full flex-col gap-4 items-center">
             <div className="flex gap-4 flex-col items-center">
-              <div className="relative rounded-full min-h-32 w-32 overflow-hidden">
+              <div {...getRootProps()} className="relative rounded-full min-h-32 w-32 overflow-hidden cursor-pointer">
+                <input {...getInputProps()} />
                 <Image
                   src={profile.avatar}
                   alt={profile.name}
