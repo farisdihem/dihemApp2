@@ -39,8 +39,8 @@ export default function ProfilePage() {
   const profile = {
     name: 'dihem abd',
     username: '@dihem.abd',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB7NVRSgQLIU6sgR34Bi8EEHaZVA_cyRHBXQPEiVOHERZFSSQ6LDu27VjI69mY4dMW5q9uAHuVVIREOrkFKE4Rn-xdKo-KXecpj_KUR1qFwZN8qCRaBbZxQks1RaaG-lXSer20yESf7XwMq4QxuuAC3ghYfvIe7fdIxJBN9nL5neqpHrCFjQ8le8DmVMCL6MXJb_po6vnfaLXUIopIlp5HamFWPylf4XyWX37M9CItHSvFildPjgnarm-obc8vBvxTyugei5S2hMY2b',
-    hint: 'woman portrait',
+    avatar: 'https://lh3.googleusercontent.com/a/ACg8ocK_1_EfJv_0PZDX2s_s_qT-3-q7g_8P9d9C_0B3X-Z5=s576-c-no',
+    hint: 'man portrait',
   };
 
   type Item = {
