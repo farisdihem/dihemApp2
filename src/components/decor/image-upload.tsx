@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useCallback, useState } from 'react';
@@ -37,13 +38,20 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
     onDrop,
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     maxFiles: 1,
-    noClick: !preview, // Only allow click when there's no preview
+    noClick: !!preview, // Prevent click from opening file dialog if there is a preview
     noKeyboard: true,
   });
+
+  const handleClick = () => {
+    if (!preview) {
+      open();
+    }
+  };
 
   return (
     <div
       {...getRootProps()}
+      onClick={handleClick}
       className={cn(
         'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors bg-white',
         isDragActive ? 'border-primary bg-primary/10' : 'hover:border-primary/50',
