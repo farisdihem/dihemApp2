@@ -1,11 +1,16 @@
+
 'use client';
 
 import { useLanguage } from '@/contexts/language-context';
 import { Button } from '@/components/ui/button';
-import { Globe } from 'lucide-react';
+import { Globe, Settings } from 'lucide-react';
 import { Logo } from '@/components/decor/logo';
 
-export function Header() {
+interface HeaderProps {
+  showSettings?: boolean;
+}
+
+export function Header({ showSettings = false }: HeaderProps) {
   const { language, setLanguage } = useLanguage();
 
   const toggleLanguage = () => {
@@ -20,9 +25,15 @@ export function Header() {
           <Logo className="h-8 w-auto inline-block" />
         </div>
         <div className="flex w-12 items-center justify-end">
-          <Button variant="ghost" size="icon" onClick={toggleLanguage} aria-label="Toggle language">
-            <Globe className="h-6 w-6" />
-          </Button>
+          {showSettings ? (
+             <Button variant="ghost" size="icon" aria-label="Settings">
+              <Settings className="h-6 w-6" />
+            </Button>
+          ) : (
+            <Button variant="ghost" size="icon" onClick={toggleLanguage} aria-label="Toggle language">
+              <Globe className="h-6 w-6" />
+            </Button>
+          )}
         </div>
       </div>
     </header>

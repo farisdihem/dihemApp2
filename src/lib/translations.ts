@@ -1,3 +1,4 @@
+
 export const translations = {
   en: {
     appName: 'DIHEM decorAI',
@@ -10,7 +11,7 @@ export const translations = {
     styleTitle: 'Choose Your Style',
     promptPlaceholder: 'e.g., white sofa, wooden floor, natural light',
     home: 'Home',
-    search: 'Search',
+    search: 'Search for styles',
     saved: 'Saved',
     profile: 'Profile',
     generating: 'Generating your new design...',
@@ -20,6 +21,7 @@ export const translations = {
     styleError: 'Please select a style.',
     before: 'Before',
     after: 'After',
+    popularStyles: 'Popular Styles',
   },
   ar: {
     appName: 'ديحم ديكور بالذكاء الاصطناعي',
@@ -32,7 +34,7 @@ export const translations = {
     styleTitle: 'اختر طرازك',
     promptPlaceholder: 'مثال: أريكة بيضاء، أرضية خشبية، إضاءة طبيعية',
     home: 'الرئيسية',
-    search: 'بحث',
+    search: 'ابحث عن الأنماط',
     saved: 'المحفوظة',
     profile: 'الشخصي',
     generating: 'جاري إنشاء تصميمك الجديد ...',
@@ -42,6 +44,7 @@ export const translations = {
     styleError: 'الرجاء اختيار طراز.',
     before: 'قبل',
     after: 'بعد',
+    popularStyles: 'الأنماط الشائعة',
   },
 };
 
