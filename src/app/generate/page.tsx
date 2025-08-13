@@ -116,17 +116,15 @@ export default function GeneratePage() {
             <Progress value={progress} className="w-full" />
           </div>
         ) : (
-          <div className="flex w-full grow bg-white @container py-3">
-            <div className="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] flex">
-              <div className="relative w-full aspect-auto rounded-none flex-1">
-                <Image
-                  src={generatedImage}
-                  alt="Room being transformed"
-                  layout="fill"
-                  objectFit="cover"
-                  data-ai-hint="room interior"
-                />
-              </div>
+           <div className="p-4">
+            <div className="relative aspect-[4/3] max-w-4xl mx-auto w-full overflow-hidden rounded-xl shadow-lg border">
+              <Image
+                src={generatedImage}
+                alt="Room being transformed"
+                layout="fill"
+                objectFit="cover"
+                data-ai-hint="room interior"
+              />
             </div>
           </div>
         )}
