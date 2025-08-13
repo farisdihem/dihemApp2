@@ -42,6 +42,7 @@ const generateRoomDesignFlow = ai.defineFlow(
     outputSchema: GenerateRoomDesignOutputSchema,
   },
   async (input) => {
+    console.log('generateRoomDesignFlow received input:', input);
     const {media} = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
       prompt: [
@@ -54,9 +55,11 @@ const generateRoomDesignFlow = ai.defineFlow(
         responseModalities: ['TEXT', 'IMAGE'],
       },
     });
+    console.log('generateRoomDesignFlow received response:', media);
 
     if (!media?.url) {
       throw new Error(
+        'generateRoomDesignFlow: Image generation failed. The model did not return an image.'
         'Image generation failed. The model did not return an image.'
       );
     }
