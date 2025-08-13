@@ -24,19 +24,47 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const accountItems = [
-  { id: 'edit-profile', icon: User, titleKey: 'editProfile', subtitleKey: 'manageProfile' },
-  { id: 'change-password', icon: Lock, titleKey: 'changePassword', subtitleKey: 'updatePassword' },
+  { id: 'edit-profile', icon: User, titleKey: 'editProfile' as keyof typeof translations.en, subtitleKey: 'manageProfile' as keyof typeof translations.en },
+  { id: 'change-password', icon: Lock, titleKey: 'changePassword' as keyof typeof translations.en, subtitleKey: 'updatePassword' as keyof typeof translations.en },
 ];
 
 const settingsItems = [
-    { id: 'language', icon: Globe, titleKey: 'language', subtitleKey: 'chooseLanguage' },
-    { id: 'notifications', icon: Bell, titleKey: 'notifications', subtitleKey: 'manageNotifications' },
+    { id: 'language', icon: Globe, titleKey: 'language' as keyof typeof translations.en, subtitleKey: 'chooseLanguage' as keyof typeof translations.en },
+    { id: 'notifications', icon: Bell, titleKey: 'notifications' as keyof typeof translations.en, subtitleKey: 'manageNotifications' as keyof typeof translations.en },
 ];
 
 const supportItems = [
-    { id: 'terms', icon: FileText, titleKey: 'terms', subtitleKey: 'readTerms' },
-    { id: 'help', icon: HelpCircle, titleKey: 'help', subtitleKey: 'contactSupport' },
+    { id: 'terms', icon: FileText, titleKey: 'terms' as keyof typeof translations.en, subtitleKey: 'readTerms' as keyof typeof translations.en },
+    { id: 'help', icon: HelpCircle, titleKey: 'help' as keyof typeof translations.en, subtitleKey: 'contactSupport' as keyof typeof translations.en },
 ];
+
+type Item = {
+  id: string;
+  icon: React.ElementType;
+  titleKey: keyof typeof translations.en;
+  subtitleKey: keyof typeof translations.en;
+};
+
+// Moved ListItem outside of the component to prevent re-creation on render.
+const ListItem = ({ item, onClick }: { item: Item, onClick: (item: Item) => void }) => {
+  const { t } = useLanguage();
+  return (
+    <div 
+      onClick={() => onClick(item)}
+      className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 group cursor-pointer active:bg-secondary"
+    >
+      <div className="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12">
+        <item.icon className="h-6 w-6" />
+      </div>
+      <div className="flex flex-col justify-center flex-1">
+        <p className="text-[#181411] text-base font-medium leading-normal line-clamp-1">{t[item.titleKey]}</p>
+        <p className="text-[#887263] text-sm font-normal leading-normal line-clamp-2">{t[item.subtitleKey]}</p>
+      </div>
+      <ChevronRight className="h-6 w-6 text-muted-foreground transition-transform group-hover:translate-x-1" />
+    </div>
+  );
+};
+
 
 export default function ProfilePage() {
   const { t, language, dir, setLanguage } = useLanguage();
@@ -66,7 +94,6 @@ export default function ProfilePage() {
         reader.readAsDataURL(file);
       });
 
-      // Optimistically update UI
       setProfile((p) => ({ ...p, avatar: dataUri }));
 
       const userId = 'test-user'; 
@@ -74,7 +101,6 @@ export default function ProfilePage() {
       const uploadResult = await uploadString(storageRef, dataUri, 'data_url');
       const downloadURL = await getDownloadURL(uploadResult.ref);
       
-      // Update with permanent URL
       setProfile((p) => ({ ...p, avatar: downloadURL }));
 
       toast({
@@ -99,13 +125,6 @@ export default function ProfilePage() {
     maxFiles: 1,
     disabled: isUploading,
   });
-
-  type Item = {
-    id: string;
-    icon: React.ElementType;
-    titleKey: keyof typeof t;
-    subtitleKey: keyof typeof t;
-  };
   
   const handleItemClick = (item: Item) => {
     if (item.id === 'language') {
@@ -117,22 +136,6 @@ export default function ProfilePage() {
       description: 'This feature is not yet implemented.',
     });
   };
-
-  const ListItem = ({ item }: { item: Item }) => (
-    <div 
-      onClick={() => handleItemClick(item)}
-      className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 group cursor-pointer active:bg-secondary"
-    >
-      <div className="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12">
-        <item.icon className="h-6 w-6" />
-      </div>
-      <div className="flex flex-col justify-center flex-1">
-        <p className="text-[#181411] text-base font-medium leading-normal line-clamp-1">{t[item.titleKey]}</p>
-        <p className="text-[#887263] text-sm font-normal leading-normal line-clamp-2">{t[item.subtitleKey]}</p>
-      </div>
-      <ChevronRight className="h-6 w-6 text-muted-foreground transition-transform group-hover:translate-x-1" />
-    </div>
-  );
 
   return (
     <div className="flex flex-col min-h-screen bg-background" dir={dir}>
@@ -177,13 +180,13 @@ export default function ProfilePage() {
         </div>
 
         <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.account}</h3>
-        {accountItems.map((item) => <ListItem key={item.id} item={item} />)}
+        {accountItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
 
         <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.settings}</h3>
-        {settingsItems.map((item) => <ListItem key={item.id} item={item} />)}
+        {settingsItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
 
         <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.support}</h3>
-        {supportItems.map((item) => <ListItem key={item.id} item={item} />)}
+        {supportItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
 
         <div className="flex px-4 py-3 mt-4">
           <Button
