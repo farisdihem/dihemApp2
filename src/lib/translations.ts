@@ -22,6 +22,10 @@ export const translations = {
     before: 'Before',
     after: 'After',
     popularStyles: 'Popular Styles',
+    transformingSpace: 'Transforming your space',
+    processing: 'Processing...',
+    designPrompt: 'Design Prompt',
+    applyChanges: 'Apply Changes',
   },
   ar: {
     appName: 'ديحم ديكور بالذكاء الاصطناعي',
@@ -45,6 +49,10 @@ export const translations = {
     before: 'قبل',
     after: 'بعد',
     popularStyles: 'الأنماط الشائعة',
+    transformingSpace: 'تحويل مساحتك',
+    processing: 'جاري المعالجة...',
+    designPrompt: 'موجه التصميم',
+    applyChanges: 'تطبيق التغييرات',
   },
 };
 

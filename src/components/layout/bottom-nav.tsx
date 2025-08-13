@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 const navItems = [
   { id: 'home', icon: Home, href: '/' },
   { id: 'search', icon: Search, href: '/search' },
-  { id: 'generate', icon: Wand2, href: '#' },
+  { id: 'generate', icon: Wand2, href: '/generate' },
   { id: 'saved', icon: Bookmark, href: '#' },
   { id: 'profile', icon: User, href: '#' },
 ];
@@ -40,7 +40,7 @@ export function BottomNav() {
               <div
                 className={`flex flex-col items-center justify-start h-full w-16 rounded-lg transition-colors duration-200 ${colorClass}`}
               >
-                <Icon className="h-6 w-6" />
+                <Icon className={`h-6 w-6 ${isActive ? 'fill-current' : ''}`} />
                 <span className="text-xs mt-1 font-medium">{label}</span>
               </div>
             </Link>
