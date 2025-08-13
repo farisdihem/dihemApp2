@@ -1,3 +1,5 @@
+import { DecorApp } from '@/components/decor/decor-app';
+
 export default function Home() {
-  return <></>;
+  return <DecorApp />;
 }
