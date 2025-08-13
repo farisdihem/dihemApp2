@@ -18,6 +18,10 @@ import {
   ChevronRight,
   Settings
 } from 'lucide-react';
+import { storage } from '@/lib/firebase';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const accountItems = [
   { id: 'edit-profile', icon: User, titleKey: 'editProfile', subtitleKey: 'manageProfile' },
@@ -37,30 +41,62 @@ const supportItems = [
 export default function ProfilePage() {
   const { t, language, dir, setLanguage } = useLanguage();
   const { toast } = useToast();
+  const [isUploading, setIsUploading] = useState(false);
 
   const [profile, setProfile] = useState({
     name: 'dihem abd',
     username: '@dihem.abd',
-    avatar: 'https://images.unsplash.com/photo-1645356153497-b0975856908d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOXx8JUQ4JUIxJUQ4JUFDJUQ5JTg0JTIwJUQ4JUE4JUQ5JTg0JUQ4JUFEJUQ5JThBJUQ4JUE5fGVufDB8fHx8MTc1NTEwMDAwOXww&ixlib=rb-4.1.0&q=80&w=1080',
+    avatar: 'https://images.unsplash.com/photo-1645356153497-b0975856908d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOXx8JUQ4JUIxJUQ4JUFDQ5JTg0JTIwJUQ4JUE4JUQ5JTg0JUQ4JUFEJUQ5JThBJUQ4JUE5fGVufDB8fHx8MTc1NTEwMDAwOXww&ixlib=rb-4.1.0&q=80&w=1080',
     hint: 'man portrait',
   });
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
+      setIsUploading(true);
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const dataUri = e.target?.result as string;
+        
+        // Preview the image locally first
         setProfile((p) => ({ ...p, avatar: dataUri }));
+
+        try {
+          // In a real app, the userId would come from an authentication context
+          const userId = 'test-user'; 
+          const storageRef = ref(storage, `avatars/${userId}/${uuidv4()}`);
+          const uploadResult = await uploadString(storageRef, dataUri, 'data_url');
+          const downloadURL = await getDownloadURL(uploadResult.ref);
+          
+          // Once uploaded, you would typically save this URL to the user's profile in Firestore.
+          // For now, we'll just update the state with the public URL.
+          setProfile((p) => ({ ...p, avatar: downloadURL }));
+
+          toast({
+            title: "Success!",
+            description: "Your profile picture has been updated.",
+          });
+        } catch (error) {
+            console.error("Error uploading avatar: ", error);
+            toast({
+                variant: 'destructive',
+                title: "Upload Failed",
+                description: "Could not upload your new profile picture. Please try again.",
+            });
+             // Optionally revert to the old avatar
+        } finally {
+            setIsUploading(false);
+        }
       };
       reader.readAsDataURL(file);
     }
-  }, []);
+  }, [toast]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     maxFiles: 1,
+    disabled: isUploading,
   });
 
   type Item = {
@@ -116,7 +152,7 @@ export default function ProfilePage() {
         <div className="flex p-4 @container">
           <div className="flex w-full flex-col gap-4 items-center">
             <div className="flex gap-4 flex-col items-center">
-              <div {...getRootProps()} className="relative rounded-full min-h-32 w-32 overflow-hidden cursor-pointer">
+              <div {...getRootProps()} className="relative rounded-full min-h-32 w-32 overflow-hidden cursor-pointer group/avatar">
                 <input {...getInputProps()} />
                 <Image
                   src={profile.avatar}
@@ -125,6 +161,11 @@ export default function ProfilePage() {
                   layout="fill"
                   objectFit="cover"
                 />
+                 {isUploading && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col items-center justify-center">
                 <p className="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">{profile.name}</p>
