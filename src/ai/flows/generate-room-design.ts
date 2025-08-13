@@ -39,7 +39,9 @@ const generateRoomDesignPrompt = ai.definePrompt({
   name: 'generateRoomDesignPrompt',
   input: {schema: GenerateRoomDesignInputSchema},
   output: {schema: GenerateRoomDesignOutputSchema},
-  prompt: `You are an AI interior designer. You will redesign a room based on a user's photo, desired design style, and any additional prompts.
+  prompt: `You are an AI interior designer. Your task is to redecorate the user's room based on the provided photo, a desired design style, and additional instructions.
+
+**IMPORTANT**: You must preserve the existing architectural elements of the room, such as the walls, windows, doors, and ceiling. Do not alter the room's structure. Your changes should focus on furniture, color palette, lighting, and decor.
 
 User's Room Photo: {{media url=photoDataUri}}
 
@@ -47,9 +49,7 @@ Desired Design Style: {{{designStyle}}}
 
 Additional Prompts: {{{prompt}}}
 
-Create a redesigned version of the room that incorporates the specified design style and adheres to the user's additional prompts. Return only a data URI.
-
-`,
+Generate a new image of the room with the redecorated interior. Return only a data URI.`,
 });
 
 const generateRoomDesignFlow = ai.defineFlow(
@@ -60,20 +60,18 @@ const generateRoomDesignFlow = ai.defineFlow(
   },
   async input => {
     const {media} = await ai.generate({
-      // IMPORTANT: ONLY the googleai/gemini-2.0-flash-preview-image-generation model is able to generate images.
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
-
-      // simple prompt
       prompt: [
         {media: {url: input.photoDataUri}},
-        {text: `Redesign this room in the style of ${input.designStyle}. ${input.prompt}`},
+        {
+          text: `Redecorate this room in the style of ${input.designStyle}. Preserve the room's structure (walls, windows, layout). Change only the furniture, colors, and decor. ${input.prompt || ''}`,
+        },
       ],
-
       config: {
-        responseModalities: ['TEXT', 'IMAGE'], // MUST provide both TEXT and IMAGE, IMAGE only won't work
+        responseModalities: ['TEXT', 'IMAGE'],
       },
     });
-    
+
     if (!media?.url) {
       throw new Error('Image generation failed. The model did not return an image.');
     }
