@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -16,6 +17,7 @@ import { StyleSelector } from '@/components/decor/style-selector';
 import { BeforeAfterSlider } from '@/components/decor/before-after-slider';
 import { Loader } from '@/components/decor/loader';
 import { Wand2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   photoDataUri: z.string().min(1, 'Please upload an image.'),
@@ -28,6 +30,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function DecorApp() {
   const { t, dir } = useLanguage();
   const { toast } = useToast();
+  const router = useRouter();
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,7 +58,10 @@ export function DecorApp() {
     setIsLoading(false);
 
     if (result.success && result.data) {
-      setGeneratedImage(result.data.redesignedRoomImage);
+      // Store images in session storage to pass to the next page
+      sessionStorage.setItem('originalImage', data.photoDataUri);
+      sessionStorage.setItem('generatedImage', result.data.redesignedRoomImage);
+      router.push('/generate');
     } else {
       toast({
         variant: 'destructive',
