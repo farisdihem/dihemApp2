@@ -21,22 +21,7 @@ import {
 import { storage } from '@/lib/firebase';
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-
-
-const accountItems = [
-  { id: 'edit-profile', icon: User, titleKey: 'editProfile' as keyof typeof translations.en, subtitleKey: 'manageProfile' as keyof typeof translations.en },
-  { id: 'change-password', icon: Lock, titleKey: 'changePassword' as keyof typeof translations.en, subtitleKey: 'updatePassword' as keyof typeof translations.en },
-];
-
-const settingsItems = [
-    { id: 'language', icon: Globe, titleKey: 'language' as keyof typeof translations.en, subtitleKey: 'chooseLanguage' as keyof typeof translations.en },
-    { id: 'notifications', icon: Bell, titleKey: 'notifications' as keyof typeof translations.en, subtitleKey: 'manageNotifications' as keyof typeof translations.en },
-];
-
-const supportItems = [
-    { id: 'terms', icon: FileText, titleKey: 'terms' as keyof typeof translations.en, subtitleKey: 'readTerms' as keyof typeof translations.en },
-    { id: 'help', icon: HelpCircle, titleKey: 'help' as keyof typeof translations.en, subtitleKey: 'contactSupport' as keyof typeof translations.en },
-];
+import { translations } from '@/lib/translations';
 
 type Item = {
   id: string;
@@ -44,6 +29,22 @@ type Item = {
   titleKey: keyof typeof translations.en;
   subtitleKey: keyof typeof translations.en;
 };
+
+const accountItems: Item[] = [
+  { id: 'edit-profile', icon: User, titleKey: 'editProfile', subtitleKey: 'manageProfile' },
+  { id: 'change-password', icon: Lock, titleKey: 'changePassword', subtitleKey: 'updatePassword' },
+];
+
+const settingsItems: Item[] = [
+    { id: 'language', icon: Globe, titleKey: 'language', subtitleKey: 'chooseLanguage' },
+    { id: 'notifications', icon: Bell, titleKey: 'notifications', subtitleKey: 'manageNotifications' },
+];
+
+const supportItems: Item[] = [
+    { id: 'terms', icon: FileText, titleKey: 'terms', subtitleKey: 'readTerms' },
+    { id: 'help', icon: HelpCircle, titleKey: 'help', subtitleKey: 'contactSupport' },
+];
+
 
 // Moved ListItem outside of the component to prevent re-creation on render.
 const ListItem = ({ item, onClick }: { item: Item, onClick: (item: Item) => void }) => {

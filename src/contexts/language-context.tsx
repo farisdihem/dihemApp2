@@ -19,26 +19,35 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // This runs only on the client
+    const storedLang = localStorage.getItem('language') as Language | null;
+    const initialLang = storedLang || 'en';
+    setLanguage(initialLang);
+    document.documentElement.lang = initialLang;
+    document.documentElement.dir = initialLang === 'ar' ? 'rtl' : 'ltr';
     setIsMounted(true);
   }, []);
 
-  const setLanguageWithHtmlUpdate = (lang: Language) => {
+  const setLanguageWithStorage = (lang: Language) => {
     setLanguage(lang);
-    if (typeof window !== 'undefined') {
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    }
+    localStorage.setItem('language', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   };
   
   const dir = language === 'ar' ? 'rtl' : 'ltr';
   const t = translations[language];
 
+  const value = { language, setLanguage: setLanguageWithStorage, dir, t };
+
+  // Render children only after the component has mounted on the client
+  // This prevents hydration mismatches and server-side errors
   if (!isMounted) {
     return null;
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: setLanguageWithHtmlUpdate, dir, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
