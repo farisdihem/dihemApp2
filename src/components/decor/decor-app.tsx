@@ -18,8 +18,8 @@ import { Loader } from '@/components/decor/loader';
 import { Wand2 } from 'lucide-react';
 
 const formSchema = z.object({
-  photoDataUri: z.string().min(1),
-  designStyle: z.string().min(1),
+  photoDataUri: z.string().min(1, 'Please upload an image.'),
+  designStyle: z.string().min(1, 'Please select a style.'),
   prompt: z.string().optional(),
 });
 
@@ -80,14 +80,14 @@ export function DecorApp() {
   return (
     <div className="flex flex-col min-h-screen bg-background" dir={dir}>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{t.tagline}</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">{t.description}</p>
+          <div className="text-center pt-5 pb-3 px-4">
+            <h2 className="text-[28px] font-bold tracking-light leading-tight">{t.tagline}</h2>
+            <p className="text-base font-normal mt-1">{t.description}</p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 p-4 pt-0">
             {generatedImage ? (
                <BeforeAfterSlider before={photoDataUri} after={generatedImage} />
             ) : isLoading ? (
@@ -97,7 +97,7 @@ export function DecorApp() {
             )}
 
             <div>
-              <h3 className="text-xl font-bold mb-4 text-center">{t.styleTitle}</h3>
+              <h3 className="text-[22px] font-bold mb-2 pt-1 px-4 text-start">{t.styleTitle}</h3>
               <StyleSelector
                 selectedStyle={selectedStyle}
                 onStyleSelect={onStyleSelect}
@@ -105,15 +105,17 @@ export function DecorApp() {
               />
             </div>
             
-            <Textarea
-              placeholder={t.promptPlaceholder}
-              className="min-h-[100px] text-base"
-              onChange={onPromptChange}
-            />
+            <div className="px-4">
+              <Textarea
+                placeholder={t.promptPlaceholder}
+                className="min-h-[100px] text-base bg-white"
+                onChange={onPromptChange}
+              />
+            </div>
 
-            <div className="flex justify-center">
-              <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isLoading}>
-                <Wand2 className="mr-2 h-5 w-5 rtl:ml-2 rtl:mr-0" />
+            <div className="flex justify-end px-4">
+              <Button type="submit" size="lg" className="h-14 pl-4 pr-6" disabled={isLoading}>
+                <Wand2 className="mr-2 h-6 w-6 rtl:ml-2 rtl:mr-0" />
                 {t.generate}
               </Button>
             </div>

@@ -33,19 +33,21 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
     [onImageUpload]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     maxFiles: 1,
+    noClick: true,
+    noKeyboard: true,
   });
 
   return (
     <div
       {...getRootProps()}
       className={cn(
-        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors cursor-pointer',
-        isDragActive ? 'border-primary bg-primary/10' : 'border-border hover:border-primary/50',
-        error ? 'border-destructive' : ''
+        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors cursor-pointer bg-white',
+        isDragActive ? 'border-primary bg-primary/10' : 'hover:border-primary/50',
+        error ? 'border-destructive' : 'border-border'
       )}
     >
       <input {...getInputProps()} />
@@ -59,14 +61,11 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
         />
       ) : (
         <>
-          <div className="rounded-full bg-secondary p-4 text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">
-            <UploadCloud className="h-10 w-10" />
-          </div>
           <div className="flex flex-col items-center gap-2">
             <p className="text-lg font-bold">{t.uploadTitle}</p>
             <p className="text-sm text-muted-foreground">{t.uploadSubtitle}</p>
           </div>
-          <Button type="button" variant="secondary" className="mt-2" onClick={(e) => e.stopPropagation()}>
+          <Button type="button" variant="secondary" className="mt-2" onClick={open}>
             {t.browse}
           </Button>
         </>
