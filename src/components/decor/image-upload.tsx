@@ -53,7 +53,7 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
       {...getRootProps()}
       onClick={handleClick}
       className={cn(
-        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors bg-white',
+        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-8 sm:p-14 text-center transition-colors bg-white',
         isDragActive ? 'border-primary bg-primary/10' : 'hover:border-primary/50',
         error ? 'border-destructive' : 'border-border',
         preview ? 'cursor-default' : 'cursor-pointer'
@@ -71,6 +71,7 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
       ) : (
         <>
           <div className="flex flex-col items-center gap-2">
+            <UploadCloud className="w-12 h-12 text-muted-foreground" />
             <p className="text-lg font-bold">{t.uploadTitle}</p>
             <p className="text-sm text-muted-foreground">{t.uploadSubtitle}</p>
           </div>
