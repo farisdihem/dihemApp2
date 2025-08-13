@@ -39,8 +39,8 @@ export default function ProfilePage() {
   const profile = {
     name: 'dihem abd',
     username: '@dihem.abd',
-    avatar: 'https://lh3.googleusercontent.com/a/ACg8ocK_1_EfJv_0PZDX2s_s_qT-3-q7g_8P9d9C_0B3X-Z5=s576-c-no',
-    hint: 'man portrait',
+    avatar: 'https://placehold.co/128x128.png',
+    hint: 'woman portrait',
   };
 
   type Item = {
