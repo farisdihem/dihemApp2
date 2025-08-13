@@ -73,6 +73,11 @@ const generateRoomDesignFlow = ai.defineFlow(
         responseModalities: ['TEXT', 'IMAGE'], // MUST provide both TEXT and IMAGE, IMAGE only won't work
       },
     });
-    return {redesignedRoomImage: media.url!};
+    
+    if (!media?.url) {
+      throw new Error('Image generation failed. The model did not return an image.');
+    }
+
+    return {redesignedRoomImage: media.url};
   }
 );
