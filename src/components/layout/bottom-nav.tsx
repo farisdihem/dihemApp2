@@ -13,15 +13,23 @@ const navItems = [
 ];
 
 export function BottomNav() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const navLabels: { [key: string]: string } = {
+    home: t.home,
+    search: t.search,
+    generate: t.generate,
+    saved: t.saved,
+    profile: t.profile,
+  };
 
   return (
     <nav className="sticky bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur-sm md:hidden">
       <div className="flex justify-around items-start h-16 px-2 pt-2 pb-1">
         {navItems.map((item, index) => {
-          const isActive = index === 0; // Highlight 'Home' for now
+          const isActive = index === 0;
           const Icon = item.icon;
-          const label = t[item.id as keyof typeof t];
+          const label = navLabels[item.id];
           const colorClass = isActive ? 'text-foreground' : 'text-muted-foreground';
 
           return (

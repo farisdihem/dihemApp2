@@ -34,7 +34,7 @@ export const translations = {
     home: 'الرئيسية',
     search: 'بحث',
     saved: 'المحفوظة',
-    profile: 'الملف الشخصي',
+    profile: 'الشخصي',
     generating: 'جاري إنشاء تصميمك الجديد ...',
     errorTitle: 'فشل الإنشاء',
     errorDescription: 'تعذر إنشاء تصميم جديد. الرجاء المحاولة مرة أخرى.',

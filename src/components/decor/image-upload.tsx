@@ -37,7 +37,7 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
     onDrop,
     accept: { 'image/*': ['.jpeg', '.png', '.jpg', '.webp'] },
     maxFiles: 1,
-    noClick: true,
+    noClick: !preview, // Only allow click when there's no preview
     noKeyboard: true,
   });
 
@@ -45,9 +45,10 @@ export function ImageUpload({ onImageUpload, error }: ImageUploadProps) {
     <div
       {...getRootProps()}
       className={cn(
-        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors cursor-pointer bg-white',
+        'relative group flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-14 text-center transition-colors bg-white',
         isDragActive ? 'border-primary bg-primary/10' : 'hover:border-primary/50',
-        error ? 'border-destructive' : 'border-border'
+        error ? 'border-destructive' : 'border-border',
+        preview ? 'cursor-default' : 'cursor-pointer'
       )}
     >
       <input {...getInputProps()} />

@@ -78,51 +78,56 @@ export function DecorApp() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background" dir={dir}>
-      <Header />
-      <main className="flex-grow">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center pt-5 pb-3 px-4">
-            <h2 className="text-[28px] font-bold tracking-light leading-tight">{t.tagline}</h2>
-            <p className="text-base font-normal mt-1">{t.description}</p>
+    <div className="flex flex-col min-h-screen bg-background justify-between" dir={dir}>
+      <div>
+        <Header />
+        <main className="flex-grow">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center pt-5 pb-3 px-4">
+              <h2 className="text-[28px] font-bold tracking-tight leading-tight">{t.tagline}</h2>
+              <p className="text-base font-normal mt-1">{t.description}</p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 p-4 pt-0">
+              {generatedImage ? (
+                 <BeforeAfterSlider before={photoDataUri} after={generatedImage} />
+              ) : isLoading ? (
+                <Loader message={t.generating} />
+              ) : (
+                <ImageUpload onImageUpload={onImageUpload} error={errors.photoDataUri?.message && t.uploadError} />
+              )}
+
+              <div>
+                <h3 className="text-[22px] font-bold mb-2 pt-1 px-4 text-start">{t.styleTitle}</h3>
+                <StyleSelector
+                  selectedStyle={selectedStyle}
+                  onStyleSelect={onStyleSelect}
+                  error={errors.designStyle?.message && t.styleError}
+                />
+              </div>
+              
+              <div className="px-4">
+                <Textarea
+                  placeholder={t.promptPlaceholder}
+                  className="min-h-[100px] text-base"
+                  onChange={onPromptChange}
+                />
+              </div>
+
+              <div className="flex justify-end px-4">
+                <Button type="submit" size="lg" className="h-14 pl-4 pr-6" disabled={isLoading}>
+                  <Wand2 className="mr-2 h-6 w-6 rtl:ml-2 rtl:mr-0" />
+                  {t.generate}
+                </Button>
+              </div>
+            </form>
           </div>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 p-4 pt-0">
-            {generatedImage ? (
-               <BeforeAfterSlider before={photoDataUri} after={generatedImage} />
-            ) : isLoading ? (
-              <Loader message={t.generating} />
-            ) : (
-              <ImageUpload onImageUpload={onImageUpload} error={errors.photoDataUri?.message && t.uploadError} />
-            )}
-
-            <div>
-              <h3 className="text-[22px] font-bold mb-2 pt-1 px-4 text-start">{t.styleTitle}</h3>
-              <StyleSelector
-                selectedStyle={selectedStyle}
-                onStyleSelect={onStyleSelect}
-                error={errors.designStyle?.message && t.styleError}
-              />
-            </div>
-            
-            <div className="px-4">
-              <Textarea
-                placeholder={t.promptPlaceholder}
-                className="min-h-[100px] text-base bg-white"
-                onChange={onPromptChange}
-              />
-            </div>
-
-            <div className="flex justify-end px-4">
-              <Button type="submit" size="lg" className="h-14 pl-4 pr-6" disabled={isLoading}>
-                <Wand2 className="mr-2 h-6 w-6 rtl:ml-2 rtl:mr-0" />
-                {t.generate}
-              </Button>
-            </div>
-          </form>
-        </div>
-      </main>
-      <BottomNav />
+        </main>
+      </div>
+      <div>
+        <BottomNav />
+        <div className="h-5 bg-white"></div>
+      </div>
     </div>
   );
 }

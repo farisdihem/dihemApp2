@@ -31,7 +31,7 @@ export function StyleSelector({ selectedStyle, onStyleSelect, error }: StyleSele
               onClick={() => onStyleSelect(style.name)}
               className={cn(
                 'group flex-shrink-0 w-40 cursor-pointer space-y-2',
-                selectedStyle === style.name ? 'opacity-100' : 'opacity-70 hover:opacity-100'
+                selectedStyle !== style.name ? 'opacity-70 hover:opacity-100' : ''
               )}
             >
               <div className={cn(
