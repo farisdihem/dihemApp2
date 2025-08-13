@@ -83,7 +83,7 @@ export default function ProfilePage() {
              <h2 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">{t.profile}</h2>
           </div>
           <div className="flex w-12 items-center justify-end">
-            <Button variant="ghost" size="icon" aria-label="Settings">
+            <Button variant="ghost" size="icon" aria-label="Settings" onClick={() => toast({ title: t.settings, description: 'This feature is not yet implemented.' })}>
               <Settings className="h-6 w-6" />
             </Button>
           </div>
