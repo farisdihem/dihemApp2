@@ -35,17 +35,15 @@ export async function createDesign(input: GenerateRoomDesignInput) {
   try {
     const result = await generateRoomDesign(input);
 
-    const output = await (async () => {
-        if (!result.redesignedRoomImage) {
-            throw new Error('No image was generated')
-        }
-        // After generating, save the design if a user ID is provided.
-        // Assuming a placeholder userId for now. In a real app, you'd get this from auth.
-        const userId = 'test-user'; 
-        return await saveDesign(userId, input.photoDataUri, result.redesignedRoomImage, input.prompt || '', input.designStyle);
-    })();
+    if (!result.redesignedRoomImage) {
+        throw new Error('No image was generated')
+    }
     
-    return { success: true, data: output.data };
+    // In a real app, you'd get this from auth.
+    const userId = 'test-user'; 
+    await saveDesign(userId, input.photoDataUri, result.redesignedRoomImage, input.prompt || '', input.designStyle);
+
+    return { success: true, data: result };
   } catch (error) {
     console.error(error);
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';

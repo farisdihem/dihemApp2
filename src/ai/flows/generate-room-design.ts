@@ -59,7 +59,7 @@ const generateRoomDesignFlow = ai.defineFlow(
 
     if (!media?.url) {
       throw new Error(
-        'generateRoomDesignFlow: Image generation failed. The model did not return an image.'
+        'Image generation failed. The model did not return an image.'
       );
     }
 
