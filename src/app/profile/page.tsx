@@ -37,8 +37,8 @@ export default function ProfilePage() {
   const { toast } = useToast();
 
   const profile = {
-    name: 'Layla Hassan',
-    username: '@layla.hassan',
+    name: 'dihem abd',
+    username: '@dihem.abd',
     avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB7NVRSgQLIU6sgR34Bi8EEHaZVA_cyRHBXQPEiVOHERZFSSQ6LDu27VjI69mY4dMW5q9uAHuVVIREOrkFKE4Rn-xdKo-KXecpj_KUR1qFwZN8qCRaBbZxQks1RaaG-lXSer20yESf7XwMq4QxuuAC3ghYfvIe7fdIxJBN9nL5neqpHrCFjQ8le8DmVMCL6MXJb_po6vnfaLXUIopIlp5HamFWPylf4XyWX37M9CItHSvFildPjgnarm-obc8vBvxTyugei5S2hMY2b',
     hint: 'woman portrait',
   };
