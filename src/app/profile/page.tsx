@@ -4,7 +4,6 @@
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/language-context';
 import { useToast } from '@/hooks/use-toast';
-import { Header } from '@/components/layout/header';
 import { BottomNav } from '@/components/layout/bottom-nav';
 import { Button } from '@/components/ui/button';
 import {
@@ -34,7 +33,7 @@ const supportItems = [
 ];
 
 export default function ProfilePage() {
-  const { t, language, dir } = useLanguage();
+  const { t, language, dir, setLanguage } = useLanguage();
   const { toast } = useToast();
 
   const profile = {
@@ -52,6 +51,10 @@ export default function ProfilePage() {
   };
   
   const handleItemClick = (item: Item) => {
+    if (item.id === 'language') {
+        setLanguage(language === 'en' ? 'ar' : 'en');
+        return;
+    }
     toast({
       title: t[item.titleKey],
       description: 'This feature is not yet implemented.',
