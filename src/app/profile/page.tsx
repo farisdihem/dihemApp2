@@ -39,7 +39,7 @@ export default function ProfilePage() {
   const profile = {
     name: 'dihem abd',
     username: '@dihem.abd',
-    avatar: 'https://placehold.co/128x128.png',
+    avatar: 'https://images.unsplash.com/photo-1645356153497-b0975856908d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOXx8JUQ4JUIxJUQ4JUFDJUQ5JTg0JTIwJUQ4JUE4JUQ5JTg0JUQ4JUFEJUQ5JThBJUQ4JUE5fGVufDB8fHx8MTc1NTEwMDAwOXww&ixlib=rb-4.1.0&q=80&w=1080',
     hint: 'man portrait',
   };
 
