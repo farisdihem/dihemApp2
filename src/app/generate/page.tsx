@@ -26,6 +26,7 @@ export default function GeneratePage() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const original = sessionStorage.getItem('originalImage');
@@ -44,6 +45,18 @@ export default function GeneratePage() {
     if (!generatedImage) return;
 
     setIsLoading(true);
+    setProgress(0);
+
+     // Simulate progress
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 95) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 5;
+      });
+    }, 200);
 
     const result = await createDesign({
       photoDataUri: generatedImage, // Use the generated image as the new base
@@ -51,6 +64,8 @@ export default function GeneratePage() {
       prompt,
     });
     
+    clearInterval(interval);
+    setProgress(100);
     setIsLoading(false);
 
     if (result.success && result.data) {
@@ -96,8 +111,9 @@ export default function GeneratePage() {
         <h1 className="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-center pb-3 pt-5">{t.transformingSpace}</h1>
         
         {isLoading ? (
-          <div className="p-4">
-             <Loader message={t.generating} />
+          <div className="p-4 space-y-4">
+            <Loader message={t.generating} />
+            <Progress value={progress} className="w-full" />
           </div>
         ) : (
           <div className="flex w-full grow bg-white @container py-3">
@@ -142,4 +158,3 @@ export default function GeneratePage() {
     </div>
   );
 }
-
