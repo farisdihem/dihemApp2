@@ -52,38 +52,44 @@ export default function ProfilePage() {
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
-    if (file) {
-      setIsUploading(true);
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const dataUri = e.target?.result as string;
-        
-        setProfile((p) => ({ ...p, avatar: dataUri }));
+    if (!file) {
+      return;
+    }
 
-        try {
-          const userId = 'test-user'; 
-          const storageRef = ref(storage, `avatars/${userId}/${uuidv4()}`);
-          const uploadResult = await uploadString(storageRef, dataUri, 'data_url');
-          const downloadURL = await getDownloadURL(uploadResult.ref);
-          
-          setProfile((p) => ({ ...p, avatar: downloadURL }));
+    setIsUploading(true);
 
-          toast({
-            title: t.uploadSuccessTitle,
-            description: t.uploadSuccessDescription,
-          });
-        } catch (error) {
-            console.error("Error uploading avatar: ", error);
-            toast({
-                variant: 'destructive',
-                title: t.uploadErrorTitle,
-                description: t.uploadErrorDescription,
-            });
-        } finally {
-            setIsUploading(false);
-        }
-      };
-      reader.readAsDataURL(file);
+    try {
+      const dataUri = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target?.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      // Optimistically update UI
+      setProfile((p) => ({ ...p, avatar: dataUri }));
+
+      const userId = 'test-user'; 
+      const storageRef = ref(storage, `avatars/${userId}/${uuidv4()}`);
+      const uploadResult = await uploadString(storageRef, dataUri, 'data_url');
+      const downloadURL = await getDownloadURL(uploadResult.ref);
+      
+      // Update with permanent URL
+      setProfile((p) => ({ ...p, avatar: downloadURL }));
+
+      toast({
+        title: t.uploadSuccessTitle,
+        description: t.uploadSuccessDescription,
+      });
+    } catch (error) {
+      console.error("Error uploading avatar: ", error);
+      toast({
+          variant: 'destructive',
+          title: t.uploadErrorTitle,
+          description: t.uploadErrorDescription,
+      });
+    } finally {
+      setIsUploading(false);
     }
   }, [toast, t]);
 
