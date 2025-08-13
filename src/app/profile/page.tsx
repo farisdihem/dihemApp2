@@ -58,39 +58,34 @@ export default function ProfilePage() {
       reader.onload = async (e) => {
         const dataUri = e.target?.result as string;
         
-        // Preview the image locally first
         setProfile((p) => ({ ...p, avatar: dataUri }));
 
         try {
-          // In a real app, the userId would come from an authentication context
           const userId = 'test-user'; 
           const storageRef = ref(storage, `avatars/${userId}/${uuidv4()}`);
           const uploadResult = await uploadString(storageRef, dataUri, 'data_url');
           const downloadURL = await getDownloadURL(uploadResult.ref);
           
-          // Once uploaded, you would typically save this URL to the user's profile in Firestore.
-          // For now, we'll just update the state with the public URL.
           setProfile((p) => ({ ...p, avatar: downloadURL }));
 
           toast({
-            title: "Success!",
-            description: "Your profile picture has been updated.",
+            title: t.uploadSuccessTitle,
+            description: t.uploadSuccessDescription,
           });
         } catch (error) {
             console.error("Error uploading avatar: ", error);
             toast({
                 variant: 'destructive',
-                title: "Upload Failed",
-                description: "Could not upload your new profile picture. Please try again.",
+                title: t.uploadErrorTitle,
+                description: t.uploadErrorDescription,
             });
-             // Optionally revert to the old avatar
         } finally {
             setIsUploading(false);
         }
       };
       reader.readAsDataURL(file);
     }
-  }, [toast]);
+  }, [toast, t]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

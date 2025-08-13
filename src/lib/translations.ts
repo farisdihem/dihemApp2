@@ -42,6 +42,10 @@ export const translations = {
     help: 'Help & Support',
     contactSupport: 'Contact us for assistance',
     logOut: 'Log Out',
+    uploadSuccessTitle: 'Success!',
+    uploadSuccessDescription: 'Your profile picture has been updated.',
+    uploadErrorTitle: 'Upload Failed',
+    uploadErrorDescription: 'Could not upload your new profile picture. Please try again.',
   },
   ar: {
     appName: 'ديحم ديكور بالذكاء الاصطناعي',
@@ -85,6 +89,10 @@ export const translations = {
     help: 'المساعدة والدعم',
     contactSupport: 'اتصل بنا للحصول على المساعدة',
     logOut: 'تسجيل الخروج',
+    uploadSuccessTitle: 'نجاح!',
+    uploadSuccessDescription: 'تم تحديث صورة ملفك الشخصي.',
+    uploadErrorTitle: 'فشل التحميل',
+    uploadErrorDescription: 'تعذر تحميل صورة ملفك الشخصي الجديدة. الرجاء المحاولة مرة أخرى.',
   },
 };
 
