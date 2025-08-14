@@ -7,21 +7,13 @@ export function Logo({ className }: { className?: string }) {
       className={cn("text-foreground", className)}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g fill="currentColor">
-        {/* Icon: Simple house/leaf fusion */}
-        <path 
-          d="M20 35 L20 20 L30 10 L40 20 L40 35 L25 35 L25 25 L35 25 L35 35 Z"
-          stroke="currentColor"
-          strokeWidth="2"
-          fill="none"
-        />
-        <path
-          d="M30 10 C 30 10, 45 1, 50 15 C 55 1, 70 10, 70 10"
-          stroke="currentColor"
-          strokeWidth="2"
-          fill="none"
-          transform="translate(-25 -2)"
-        />
+      <g>
+        {/* Abstract Icon inspired by the image */}
+        <path d="M10 10 H 30 V 30 H 10 Z" fill="hsl(var(--primary))" />
+        <circle cx="20" cy="20" r="8" fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth="2" />
+        <circle cx="20" cy="20" r="3" fill="hsl(var(--primary))" />
+        <path d="M 5 5 L 15 15 M 25 15 L 35 5 M 5 35 L 15 25 M 25 25 L 35 35" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+
       </g>
       {/* Text: dihem decorAI */}
       <text x="55" y="32" fontFamily="sans-serif" fontWeight="bold" fontSize="28px" fill="currentColor">
