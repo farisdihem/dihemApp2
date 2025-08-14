@@ -13,25 +13,20 @@ export function Logo({ className }: { className?: string }) {
           <stop offset="100%" style={{ stopColor: '#F0E8E8', stopOpacity: 1 }} />
         </linearGradient>
       </defs>
-      <g clipPath="url(#clip)">
-        <path d="M0 0 H200 V100 H0 Z" fill="#F2E6E4" />
-        <path d="M-20 100 L100 -20 L220 -20 L100 120 Z" fill="#DDE6E8" />
-        <path d="M40 0 H240 L160 100 H-40 Z" fill="#C9D6D9" />
-        <path 
-          d="M35 50 C40 30, 60 25, 80 30 L170 65 C180 70, 180 80, 170 85 L80 115 C70 120, 50 120, 40 110 Z" 
-          transform="rotate(-20 100 60)" 
-          fill="#4A5559"
-        />
+      <g>
+        <rect width="200" height="100" fill="#1A2E39" />
+        <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="#F26A4E" />
+        <path d="M150 0 L200 50 L150 100 L100 50 Z" fill="#4EADF2" />
         <text 
           x="100" 
           y="58" 
           fontFamily="sans-serif" 
           fontWeight="bold" 
-          fontSize="24px" 
+          fontSize="20px" 
           textAnchor="middle" 
-          fill="url(#textGradient)"
+          fill="white"
         >
-          DECORai
+          decorAI-DIHEM
         </text>
       </g>
     </svg>
