@@ -11,17 +11,13 @@ import { Button } from '@/components/ui/button';
 import {
   User,
   Lock,
-  Globe,
-  Bell,
-  FileText,
-  HelpCircle,
   ChevronRight,
-  Settings
 } from 'lucide-react';
 import { storage } from '@/lib/firebase';
 import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { translations } from '@/lib/translations';
+import { SettingsSheet } from '@/components/layout/settings-sheet';
 
 type Item = {
   id: string;
@@ -35,18 +31,6 @@ const accountItems: Item[] = [
   { id: 'change-password', icon: Lock, titleKey: 'changePassword', subtitleKey: 'updatePassword' },
 ];
 
-const settingsItems: Item[] = [
-    { id: 'language', icon: Globe, titleKey: 'language', subtitleKey: 'chooseLanguage' },
-    { id: 'notifications', icon: Bell, titleKey: 'notifications', subtitleKey: 'manageNotifications' },
-];
-
-const supportItems: Item[] = [
-    { id: 'terms', icon: FileText, titleKey: 'terms', subtitleKey: 'readTerms' },
-    { id: 'help', icon: HelpCircle, titleKey: 'help', subtitleKey: 'contactSupport' },
-];
-
-
-// Moved ListItem outside of the component to prevent re-creation on render.
 const ListItem = ({ item, onClick }: { item: Item, onClick: (item: Item) => void }) => {
   const { t } = useLanguage();
   return (
@@ -128,10 +112,6 @@ export default function ProfilePage() {
   });
   
   const handleItemClick = (item: Item) => {
-    if (item.id === 'language') {
-        setLanguage(language === 'en' ? 'ar' : 'en');
-        return;
-    }
     toast({
       title: t[item.titleKey],
       description: 'This feature is not yet implemented.',
@@ -147,9 +127,7 @@ export default function ProfilePage() {
              <h2 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">{t.profile}</h2>
           </div>
           <div className="flex w-12 items-center justify-end">
-            <Button variant="ghost" size="icon" aria-label="Settings" onClick={() => toast({ title: t.settings, description: 'This feature is not yet implemented.' })}>
-              <Settings className="h-6 w-6" />
-            </Button>
+             <SettingsSheet />
           </div>
         </div>
       </header>
@@ -182,12 +160,6 @@ export default function ProfilePage() {
 
         <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.account}</h3>
         {accountItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
-
-        <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.settings}</h3>
-        {settingsItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
-
-        <h3 className="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">{t.support}</h3>
-        {supportItems.map((item) => <ListItem key={item.id} item={item} onClick={handleItemClick} />)}
 
         <div className="flex px-4 py-3 mt-4">
           <Button
