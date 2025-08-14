@@ -3,32 +3,29 @@ import { cn } from "@/lib/utils";
 export function Logo({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 200 100"
+      viewBox="0 0 240 80"
       className={cn("text-foreground", className)}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{ stopColor: '#FFFFFF', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#F0E8E8', stopOpacity: 1 }} />
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#e66b19" />
+          <stop offset="100%" stopColor="#E6D799" />
         </linearGradient>
       </defs>
-      <g>
-        <rect width="200" height="100" fill="#1A2E39" />
-        <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="#F26A4E" />
-        <path d="M150 0 L200 50 L150 100 L100 50 Z" fill="#4EADF2" />
-        <text 
-          x="100" 
-          y="58" 
-          fontFamily="sans-serif" 
-          fontWeight="bold" 
-          fontSize="20px" 
-          textAnchor="middle" 
-          fill="white"
-        >
-          decorAI-DIHEM
-        </text>
-      </g>
+      <rect x="10" y="20" width="40" height="40" rx="8" fill="url(#logoGradient)" />
+      <path d="M25 30 L 35 40 L 25 50" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <text 
+        x="65" 
+        y="50" 
+        fontFamily="Plus Jakarta Sans, sans-serif" 
+        fontWeight="bold" 
+        fontSize="24" 
+        fill="hsl(var(--foreground))"
+        dominantBaseline="middle"
+      >
+        decorAI-DIHEM
+      </text>
     </svg>
   );
 }
