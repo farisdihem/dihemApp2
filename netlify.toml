@@ -1,0 +1,5 @@
+# netlify.toml
+
+# Set the timeout for all serverless functions
+[functions]
+  timeout = 45 # Increase timeout to 45 seconds
