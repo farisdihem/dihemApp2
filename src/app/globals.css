@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 25 12% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 12% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 12% 8%;
+    --primary: 26 74% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 14% 95%;
+    --secondary-foreground: 25 12% 8%;
+    --muted: 30 14% 91%;
+    --muted-foreground: 29 13% 49.6%;
+    --accent: 50 56% 75%;
+    --accent-foreground: 25 12% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 26 13% 88%;
+    --input: 30 14% 91%;
+    --ring: 26 74% 50%;
+  }
+ 
+  .dark {
+    --background: 25 12% 8%;
+    --foreground: 0 0% 98%;
+    --card: 25 12% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 25 12% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 26 74% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 14% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 30 14% 15%;
+    --muted-foreground: 26 14% 60%;
+    --accent: 50 56% 75%;
+    --accent-foreground: 25 12% 8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 14% 15%;
+    --input: 30 14% 15%;
+    --ring: 26 74% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
